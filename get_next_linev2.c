@@ -24,20 +24,25 @@
 int		get_next_line(const int fd, char **line)
 {
 	int		ret;
-	char *tmp;
+	static	char *mem;
 	int i;
 
 	i = 0;
 	*line = malloc(BUFF_SIZE);
-	ret = read(fd, *line, BUFF_SIZE);
-	while (line[i])
+	ret = read(fd, mem, BUFF_SIZE);
+	if (ret < 0 || BUFF_SIZE < 0 || !line)
+			return(-1)
+	while((ret = read(fd, mem, BUFF_SIZE)) != 0)
 	{
-		while (*line[i] != '\n')
-			i++;
-	}                                         
-	ft_strncpy(tmp, * line, ft_strlen(line[i]));
-	*line = tmp;
-	return (ret);
+		//creer index de ft_strchr
+		line = ft_strsub(mem, 0, ft_strchri(mem,'\n'));
+		tmp = ft_strsub(mem, ft_strchri(mem, '\n') + 1, ft_strlen(mem));
+		free(mem);
+		mem = ft_strdup(tmp);
+		free(tmp);
+		}
+	}
+
 }
 
 
