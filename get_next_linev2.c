@@ -19,33 +19,30 @@
 #include <fcntl.h>
 #include "get_next_line.h"
 
-//ecrire une fonction pour calcuer la taille du malloc de *line
-
 int		get_next_line(const int fd, char **line)
 {
 	int		ret;
-	static	char *mem;
-	int i;
+	static	char *mem = 0;
 
-	i = 0;
-	*line = malloc(BUFF_SIZE);
 	ret = read(fd, mem, BUFF_SIZE);
 	if (ret < 0 || BUFF_SIZE < 0 || !line)
 			return(-1)
+			//si je sors de GNL et reviens dans la fonction, READ ne va pas ecraser la valeur de mem ?
 	while((ret = read(fd, mem, BUFF_SIZE)) != 0)
 	{
-		//creer index de ft_strchr
 		line = ft_strsub(mem, 0, ft_strchri(mem,'\n'));
 		tmp = ft_strsub(mem, ft_strchri(mem, '\n') + 1, ft_strlen(mem));
 		free(mem);
 		mem = ft_strdup(tmp);
 		free(tmp);
+		return(1)
 		}
 	}
-
-}
-
-
+	if (ret == 0)
+	{
+		line = strdup(mem);
+		return (1);
+	}
 
 int main()
 {
