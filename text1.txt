@@ -1,2 +1,0 @@
-Ceci est un test, imprime pour le texte. Et mnt ?
-Deuxieme ligne.
